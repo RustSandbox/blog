@@ -1,40 +1,31 @@
 name: Build documentation
-
 on:
   push:
-    # To trigger the workflow once you push to the `main` branch
-    # Replace `main` with your branch’s name
-    branches: ["main"]
-  # Specify to run a workflow manually from the Actions tab on GitHub
-  workflow_dispatch:
-
-env:
-  # Name of module and id separated by a slash
-  INSTANCE: Writerside/hi
-  # Replace HI with the ID of the instance in capital letters
-  ARTIFACT: webHelpIN2-all.zip
-  # Docker image version
-  DOCKER_VERSION: 241.15989
+    branches: ["main"]  # Replace 'main' with your branch name
+  workflow_dispatch:     # Allow manual triggering
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Build Writerside docs using Docker
+      - name: Build Writerside docs
         uses: JetBrains/writerside-github-action@v4
         with:
-          instance: ${{ env.INSTANCE }}
-          artifact: ${{ env.ARTIFACT }}
-          docker-version: ${{ env.DOCKER_VERSION }}
+          instance: Writerside/hi    # Update if your module/instance differs
+          artifact: webHelpHI2-all.zip # Update if your module/instance differs
+          docker-version: 'latest'
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.4.0
         with:
-          name: artifact
-          path: artifacts/${{ env.ARTIFACT }}
-          retention-days: 7
+          branch: gh-pages       # The branch the action should deploy to.
+          folder: webHelpHI2-all # The folder the action should deploy. Update if needed.
