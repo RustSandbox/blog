@@ -7,9 +7,6 @@ permissions:
   contents: write
   pages: write
   id-token: write
-  # Add this line
-  docker_run: write
-
 
 jobs:
   build-and-deploy:
@@ -24,11 +21,11 @@ jobs:
         uses: JetBrains/writerside-github-action@v4
         with:
           instance: Writerside/hi    # Update if your module/instance differs
-          artifact: webHelpHI2-all.zip # Update if your module/instance differs
+          artifact: webHelpIN2-all.zip # Update if your module/instance differs
           docker-version: 'latest'
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.4.0
         with:
           branch: gh-pages       # The branch the action should deploy to.
-          folder: webHelpHI2-all # The folder the action should deploy. Update if needed.
+          folder: webHelpIN2-all # The folder the action should deploy. Update if needed.
