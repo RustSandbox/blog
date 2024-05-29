@@ -7,6 +7,9 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  # Add this line
+  docker_run: write
+
 
 jobs:
   build-and-deploy:
